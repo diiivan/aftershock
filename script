@@ -65,7 +65,7 @@ PasswordAuthentication no""" | sudo tee /etc/ssh/sshd_config > /dev/null &&
 	sudo service sshd restart || error 3
 	echo "Step 3 finished"
 	echo "Now you should be able to connect to the guest machine by typing"
-	echo "\`ssh user@192.168.56.2 -p 2222\`"
+	echo "\`ssh user@192.168.56.2 -p 2222 -i id_rsa\`"
 	echo "And then run this script as ./script 4"
 	exit 0
 }
@@ -160,13 +160,13 @@ execute()
 	then
 		install
 		network
-		echo "Now you should set up ssh from the host machine by running host-script\nThen press any key to continue (or stop the script and re-run as ./script 3)"
+		echo "Now you should set up ssh from the host machine by running host-script\nThen press enter to continue (or stop the script and re-run as ./script 3)"
 		read NONE
 		ssh_setup
 	elif [ "$1" = "2" ]
 	then
 		network
-		echo "Now you should set up ssh from the host machine by running host-script\nThen press any key to continue (or stop the script and re-run as ./script 3)"
+		echo "Now you should set up ssh from the host machine by running host-script\nThen press enter to continue (or stop the script and re-run as ./script 3)"
 		read NONE
 		ssh_setup
 	elif [ "$1" = "3" ]
