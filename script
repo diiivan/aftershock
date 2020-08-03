@@ -99,11 +99,12 @@ port_protection()
 	backup /etc/portsentry/portsentry.conf
 	sudo cp config/portsentry.conf /etc/portsentry/portsentry.conf || error 6
 	sudo service portsentry restart || error 6
-	echo "Step 6 finished"
+	echo "step 6 finished"
 }
 
 remove_services()
 {
+	echo "Step 7 (stop unnecessary services)"
 	echo -n "rsyslog: "
 	sudo service rsyslog stop && echo "[OK]" || echo "[FAIL]"
 	echo -n "console-setup.sh: "
@@ -126,6 +127,7 @@ remove_services()
 	sudo service rsyslog stop && echo "[OK]" || echo "[FAIL]"
 	echo -n "uuidd: "
 	sudo service uuidd stop && echo "[OK]" || echo "[FAIL]"
+	echo "step 7 finished"
 }
 
 cron_setup()
