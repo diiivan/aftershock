@@ -107,25 +107,25 @@ remove_services()
 {
 	echo -n "rsyslog: "
 	sudo service rsyslog stop && echo "[OK]" || echo "[FAIL]"
-	echo -n "console-setup.sh: "V
+	echo -n "console-setup.sh: "
 	sudo service console-setup.sh stop && echo "[OK]" || echo "[FAIL]"
-	echo -n "grub-common: "V
+	echo -n "grub-common: "
 	sudo service grub-common stop && echo "[OK]" || echo "[FAIL]"
-	echo -n "hwclock.sh: "V
+	echo -n "hwclock.sh: "
 	sudo service hwclock.sh stop && echo "[OK]" || echo "[FAIL]"
-	echo -n "irqbalance: "V
+	echo -n "irqbalance: "
 	sudo service irqbalance stop && echo "[OK]" || echo "[FAIL]"
-	echo -n "keyboard-setup.sh: "V
+	echo -n "keyboard-setup.sh: "
 	sudo service keyboard-setup.sh stop && echo "[OK]" || echo "[FAIL]"
-	echo -n "plymouth: "V
+	echo -n "plymouth: "
 	sudo service plymouth stop && echo "[OK]" || echo "[FAIL]"
-	echo -n "plymouth-log: "V
+	echo -n "plymouth-log: "
 	sudo service plymouth-log stop && echo "[OK]" || echo "[FAIL]"
-	echo -n "rsync: "V
+	echo -n "rsync: "
 	sudo service rsync stop && echo "[OK]" || echo "[FAIL]"
-	echo -n "rsyslog: "V
+	echo -n "rsyslog: "
 	sudo service rsyslog stop && echo "[OK]" || echo "[FAIL]"
-	echo -n "uuidd: "V
+	echo -n "uuidd: "
 	sudo service uuidd stop && echo "[OK]" || echo "[FAIL]"
 }
 
@@ -149,8 +149,7 @@ nginx_setup()
 {
 	echo "Step 10 (Setup nginx)"
 	sudo cp config/self-signed.conf /etc/nginx/snippets &&
-	sudo cp config/ssl-params.conf /etc/nginx/snippets || error 10
-	backup /etc/nginx/sites-available/default
+	backup /etc/nginx/sites-available/default &&
 	sudo cp config/default /etc/nginx/sites-available &&
 	sudo service nginx restart || error 10
 	echo "Step 10 finished"
