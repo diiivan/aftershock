@@ -30,8 +30,7 @@ postfix postfix/mailname string localhost
 postfix postfix/relayhost string localhost
 postfix postfix/destinations string $(hostname -f), localhost
 EOF
-DEBIAN_FRONTEND=noninteractive sudo apt install -y postfix
-sudo apt install -y ufw policykit-1 fail2ban nginx portsentry mailutils openssh-server || error 1
+DEBIAN_FRONTEND=noninteractive sudo apt install -y postfix ufw policykit-1 fail2ban nginx portsentry mailutils openssh-server || error 1
 echo "Step 1 finished"
 }
 
