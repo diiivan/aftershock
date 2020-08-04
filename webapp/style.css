@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+:root {
+    --app-bg-color: rgba(0, 240, 240, 0.2);
+    --app-border: 1px solid rgba(0, 0, 0, 0.1);
+    --app-width: 1800px;
+    --app-height: calc(var(--app-width) * 0.4);
+    --character-color: rgba(255, 0, 0, 0.5);
+    --character-height: calc(var(--app-height) * 0.25);
+    --character-width: calc(var(--app-width) * 0.04);
+    --character-top: calc(var(--app-height) - var(--character-height));
+    --any-font-size: calc(0.025 * var(--app-width));
+    --character-font-padding: calc(0.06 * var(--character-height));
+    --enemy-color: rgba(0, 0, 255, 0.5);
+    --enemy-height: calc(var(--app-height) * 0.1);
+    --enemy-width: calc(var(--app-width) * 0.04);
+    --enemy-top: calc(var(--app-height) - var(--enemy-height) - 0.25 * var(--app-height));
+    --enemy-left: calc(var(--app-width) - var(--enemy-width));
+    --enemy-font-padding: calc(0.06 * var(--enemy-height));
+}
+#app {
+    width: var(--app-width);
+    height: var(--app-height);
+    border: var(--app-border);
+    background-color: var(--app-bg-color);
+}
+#character {
+    width: var(--character-width);
+    height: var(--character-height);
+    background-color: var(--character-color);
+    position: relative;
+    top: var(--character-top);
+}
+#face-character {
+     font-size: var(--any-font-size);
+     position: relative;
+     padding-left: var(--character-font-padding);
+     padding-top: var(--character-font-padding);
+}
+#face-enemy {
+    font-size: var(--any-font-size);
+    position: relative;
+    padding-left: var(--enemy-font-padding);
+    padding-top: var(--enemy-font-padding);
+}
+.jumps {
+    animation: jump 500ms;
+}
+#enemy {
+    width: var(--enemy-width);
+    height: var(--enemy-height);
+    background-color: var(--enemy-color);
+    position: relative;
+    top: var(--enemy-top);
+    left: var(--enemy-left);
+    animation: enemy 2s infinite;
+}
+@keyframes enemy {
+    0% {
+        left: var(--enemy-left);
+    }
+    100% {
+        left: calc(-2 * var(--enemy-width));
+    }
+}
+@keyframes jump {
+    0% {
+        top: calc(var(--app-height) * 0.75);
+    }
+    15% {
+        top: calc(var(--app-height) * 0.65);
+    }
+    30% {
+        top: calc(var(--app-height) * 0.5);
+    }
+    50% {
+        top: calc(var(--app-height) * 0.4);
+    }
+    70% {
+        top: calc(var(--app-height) * 0.5);
+    }
+    85% {
+        top: calc(var(--app-height) * 0.65);
+    }
+    100% {
+        top: calc(var(--app-height) * 0.75);
+    }
+}

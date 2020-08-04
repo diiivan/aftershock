@@ -153,7 +153,13 @@ nginx_setup()
 	backup /etc/nginx/sites-available/default &&
 	sudo cp config/default /etc/nginx/sites-available &&
 	sudo service nginx restart || error 10
+	sudo cp webapp/* /var/www/html
 	echo "Step 10 finished"
+}
+
+completed()
+{
+	echo "Deployment finished"
 }
 
 execute()
@@ -183,6 +189,7 @@ execute()
 		cron_setup
 		ssl_cert
 		nginx_setup
+		completed
 	elif [ "$1" = "5" ]
 	then
 		dos_protection_setup
@@ -191,6 +198,7 @@ execute()
 		cron_setup
 		ssl_cert
 		nginx_setup
+		completed
 	elif [ "$1" = "6" ]
 	then
 		port_protection
@@ -198,24 +206,29 @@ execute()
 		cron_setup
 		ssl_cert
 		nginx_setup
+		completed
 	elif [ "$1" = "7" ]
 	then
 		remove_services
 		cron_setup
 		ssl_cert
 		nginx_setup
+		completed
 	elif [ "$1" = "8" ]
 	then
 		cron_setup
 		ssl_cert
 		nginx_setup
+		completed
 	elif [ "$1" = "9" ]
 	then
 		ssl_cert
 		nginx_setup
+		completed
 	elif [ "$1" = "10" ]
 	then
 		nginx_setup
+		completed
 	fi
 }
 
