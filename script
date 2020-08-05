@@ -30,7 +30,7 @@ postfix postfix/mailname string localhost
 postfix postfix/relayhost string localhost
 postfix postfix/destinations string $(hostname -f), localhost
 EOF
-DEBIAN_FRONTEND=noninteractive sudo apt install -y postfix ufw policykit-1 fail2ban nginx portsentry mailutils openssh-server || error 1
+DEBIAN_FRONTEND=noninteractive sudo apt install -y postfix ufw policykit-1 fail2ban apache2 portsentry mailutils openssh-server || error 1
 echo "Step 1 finished"
 }
 
@@ -123,8 +123,6 @@ remove_services()
 	sudo service plymouth-log stop && echo "[OK]" || echo "[FAIL]"
 	echo -n "rsync: "
 	sudo service rsync stop && echo "[OK]" || echo "[FAIL]"
-	echo -n "rsyslog: "
-	sudo service rsyslog stop && echo "[OK]" || echo "[FAIL]"
 	echo -n "uuidd: "
 	sudo service uuidd stop && echo "[OK]" || echo "[FAIL]"
 	echo "step 7 finished"
@@ -146,19 +144,17 @@ ssl_cert()
 	echo "Step 9 finished"
 }
 
-nginx_setup()
+apache_setup()
 {
-	echo "Step 10 (Setup nginx)"
-	sudo cp config/self-signed.conf /etc/nginx/snippets &&
-	backup /etc/nginx/sites-available/default &&
-	sudo cp config/default /etc/nginx/sites-available &&
-	sudo service nginx restart &&
+	echo "Step 10 (Setup apache)"
+	backup /etc/apache2/sites-available/default-ssl.conf &&
+	sudo cp config/default-ssl.conf /etc/apache2/sites-available &&
+	sudo a2enmod ssl &&
+	sudo a2ensite default-ssl &&
+	sudo service apache2 restart &&
 	sudo cp webapp/* /var/www/html &&
 	sudo cp webapp/* /var/www/html &&
 	sudo chown -R root:root /var/www/html &&
-	sudo cp config/htpasswd /etc/nginx/.htpasswd &&
-	sudo chown root:root /etc/nginx/.htpasswd &&
-	sudo chmod 644 /etc/nginx/.htpasswd || error 10
 	echo "Step 10 finished"
 }
 
@@ -193,7 +189,7 @@ execute()
 		remove_services
 		cron_setup
 		ssl_cert
-		nginx_setup
+		apache_setup
 		completed
 	elif [ "$1" = "5" ]
 	then
@@ -202,7 +198,7 @@ execute()
 		remove_services
 		cron_setup
 		ssl_cert
-		nginx_setup
+		apache_setup
 		completed
 	elif [ "$1" = "6" ]
 	then
@@ -210,29 +206,29 @@ execute()
 		remove_services
 		cron_setup
 		ssl_cert
-		nginx_setup
+		apache_setup
 		completed
 	elif [ "$1" = "7" ]
 	then
 		remove_services
 		cron_setup
 		ssl_cert
-		nginx_setup
+		apache_setup
 		completed
 	elif [ "$1" = "8" ]
 	then
 		cron_setup
 		ssl_cert
-		nginx_setup
+		apache_setup
 		completed
 	elif [ "$1" = "9" ]
 	then
 		ssl_cert
-		nginx_setup
+		apache_setup
 		completed
 	elif [ "$1" = "10" ]
 	then
-		nginx_setup
+		apache_setup
 		completed
 	fi
 }
